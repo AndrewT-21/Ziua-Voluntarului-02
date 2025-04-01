@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizualizare Înscrieri</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #900000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 32px;
+            color: white;
+        }
+
+        table {
+            width: 90%;
+            max-width: 1000px;
+            border-collapse: collapse;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #600000;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #ffcccc;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lista înscrierilor - Ziua Voluntarului 02</h1>
+
+    {% if date %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nume de familie</th>
+                <th>Prenume</th>
+                <th>Vârstă</th>
+                <th>Telefon</th>
+                <th>Județ</th>
+                <th>Oraș</th>
+                <th>Email</th>
+                <th>Părinți de acord</th> <!-- Adăugat header corect -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in date %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[6] }}</td>
+                <td>{{ row[7] }}</td>  <!-- Asigură-te că este corect indexul -->
+                <td>{{ row[8] if row[8] else "" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% else %}
+    <p class="no-data">Nu există înscrieri în acest moment.</p>
+    {% endif %}
+</body>
+
+</html>

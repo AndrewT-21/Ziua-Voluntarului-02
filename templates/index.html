@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formular de Înscriere</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #900000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .logo {
+            width: 80%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            position: relative;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px;
+            border: 8px solid #600000;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .form-container>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .form-group-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid black;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            width: 50%;
+            padding: 14px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            background-color: #d9534f;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #c9302c;
+        }
+
+        .alert-container {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ffcccc;
+            border: 2px solid red;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .alert-container a {
+            color: blue;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .checkbox-label-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 100px;
+        }
+
+        .checkbox-label-container input[type="checkbox"] {
+            margin: 0;
+            width: 24px;
+            height: 24px;
+        }
+
+        .checkbox-label-container label {
+            margin: 0;
+            padding: 0;
+            line-height: 1.1;
+        }
+
+        @media (max-width: 768px) {
+            .form-group-container {
+                flex-direction: column;
+            }
+
+            .logo {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="{{ url_for('static', filename='Logo.png') }}" alt="Logo" class="logo">
+
+    <div class="form-container">
+        <h1>Ziua Voluntarului 02</h1>
+        <form action="/" method="POST" onsubmit="return validateForm()">
+            <div class="form-group-container">
+                <div class="form-group">
+                    <label for="nume-familie">Nume de familie</label>
+                    <input type="text" id="nume-familie" name="nume-familie" placeholder="Nume de familie" required maxlength="255">
+                </div>
+                <div class="form-group">
+                    <label for="prenume">Prenume</label>
+                    <input type="text" id="prenume" name="prenume" placeholder="Prenume" required maxlength="255">
+                </div>
+            </div>
+            <div class="form-group-container">
+                <div class="form-group">
+                    <label for="varsta">Vârstă</label>
+                    <input type="text" id="varsta" name="varsta" placeholder="Vârstă" required oninput="verificaVarsta()" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label for="telefon">Număr de telefon</label>
+                    <input type="tel" id="telefon" name="telefon" placeholder="Telefon" required maxlength="15">
+                </div>
+            </div>
+            <div class="form-group-container">
+                <div class="form-group">
+                    <label for="judet">Județ</label>
+                    <input type="text" id="judet" name="judet" placeholder="Județ" required maxlength="255">
+                </div>
+                <div class="form-group">
+                    <label for="oras">Oraș</label>
+                    <input type="text" id="oras" name="oras" placeholder="Oraș" required maxlength="255">
+                </div>
+            </div>
+            <div class="form-group-container">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email" required maxlength="255">
+                </div>
+            </div>
+            <div class="checkbox-label-container" id="text-minori" style="display: none;">
+                <input type="checkbox" id="acord-parinti" name="acord-parinti" value="1">
+                <label for="acord-parinti" style="color: white; font-weight: bold; font-size: 18px;">
+                    Părinții tăi sunt de-acord să fii prezent la "Ziua Voluntarului 02"?
+                </label>
+            </div>
+            <div class="button-container">
+                <button type="submit">Trimite formular</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function verificaVarsta() {
+            let varsta = document.getElementById("varsta").value;
+            let textMinori = document.getElementById("text-minori");
+    
+            // Afișează checkbox-ul doar pentru cei sub 18 ani
+            textMinori.style.display = (varsta !== "" && parseInt(varsta) < 18) ? "flex" : "none";
+        }
+    </script>
+    
+</body>
+
+</html>
