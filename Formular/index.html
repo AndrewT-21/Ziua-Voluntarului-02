@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formular de Înscriere</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #900000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .form-container {
+      position: relative;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 800px;
+      border: 8px solid #600000;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .form-container > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .form-group-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      flex: 1;
+      text-align: left;
+    }
+
+    .form-group label {
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: white;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 2px solid black;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 50%;
+      padding: 14px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 5px;
+      background-color: #d9534f;
+      transition: background 0.3s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #c9302c;
+    }
+
+    @media (max-width: 768px) {
+      .form-group-container {
+        flex-direction: column;
+      }
+    }
+
+    .checkbox-label-container {
+      display: none;
+      color: white;
+      font-weight: bold;
+      margin-top: 10px;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Stil pentru logo */
+    .logo {
+      max-width: 800px;  /* Ajustează lățimea logo-ului */
+      margin-bottom: 20px; /* Distanța între logo și formular */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Adăugarea logo-ului deasupra formularului -->
+  <img src="logo.png" alt="Logo" class="logo">
+
+<div class="form-container">
+  <h1>Formular de Înscriere</h1>
+  <form id="inscriereForm">
+    <div class="form-group-container">
+      <div class="form-group">
+        <label for="nume">Nume</label>
+        <input type="text" id="nume" name="nume" required maxlength="255">
+      </div>
+      <div class="form-group">
+        <label for="prenume">Prenume</label>
+        <input type="text" id="prenume" name="prenume" required maxlength="255">
+      </div>
+    </div>
+
+    <div class="form-group-container">
+      <div class="form-group">
+        <label for="varsta">Vârstă</label>
+        <input type="text" id="varsta" name="varsta" required maxlength="2" pattern="[0-9]{1,2}" title="Introduceți o valoare numerică" oninput="verificaVarsta()">
+      </div>
+      <div class="form-group">
+        <label for="telefon">Telefon</label>
+        <input type="tel" id="telefon" name="telefon" required maxlength="15">
+      </div>
+    </div>
+
+    <div class="form-group-container">
+      <div class="form-group">
+        <label for="judet">Județ</label>
+        <input type="text" id="judet" name="judet" required maxlength="255">
+      </div>
+      <div class="form-group">
+        <label for="oras">Oraș</label>
+        <input type="text" id="oras" name="oras" required maxlength="255">
+      </div>
+    </div>
+
+    <div class="form-group-container">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required maxlength="255">
+      </div>
+    </div>
+
+    <div class="checkbox-label-container" id="text-minori" style="display: none;">
+      <input type="checkbox" id="acord-parinti" name="acord-parinti" value="1" style="width: 24px; height: 24px;">
+      <label for="acord-parinti">Părinții tăi sunt de-acord să fii prezent?</label>
+    </div>
+
+    <button type="submit">Trimite Formular</button>
+  </form>
+</div>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyXloXS5NX2bjOivVPFhPuftXz3r_7fqb-rbB-6MfFWJ1DY9dkXOYficm0CtaG27qXK_Q/exec'; // URL script
+
+  const form = document.getElementById('inscriereForm');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    // Preluăm datele din formular
+    const varsta = form.varsta.value;
+    const acordParinti = (parseInt(varsta) < 18) ? form['acord-parinti'].checked : true; // dacă este minor, verificăm acordul, altfel îl setăm pe DA
+
+    const data = {
+      nume: form.nume.value,
+      prenume: form.prenume.value,
+      varsta: form.varsta.value,
+      telefon: form.telefon.value,
+      judet: form.judet.value,
+      oras: form.oras.value,
+      email: form.email.value,
+      acord_parinti: acordParinti ? 'Da' : 'Nu' // Salvăm DA sau NU în funcție de valoarea acordului
+    };
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+    .then(response => alert('Formular trimis cu succes!'))
+    .catch(error => alert('Eroare la trimitere!'));
+
+    form.reset();
+  });
+
+  // Functia care verifică vârsta și actualizează vizibilitatea casetei de acord
+  function verificaVarsta() {
+    let varsta = document.getElementById("varsta").value;
+    let textMinori = document.getElementById("text-minori");
+
+    // Dacă utilizatorul este minor, arătăm căsuța de acord
+    textMinori.style.display = (varsta !== "" && parseInt(varsta) < 18) ? "flex" : "none";
+  }
+</script>
+
+</body>
+</html>
