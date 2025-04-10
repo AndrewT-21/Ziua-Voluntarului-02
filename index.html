@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,26 +9,64 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #900000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
-      flex-direction: column;
-      padding: 20px;
       margin: 0;
+      padding: 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .logo {
+      max-width: 300px;
+      height: auto;
+      margin-bottom: 30px;
+      z-index: 2;
+    }
+
+    .corner-image {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 20px;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    .left-top {
+      top: 110px;
+      left: 100px;
+    }
+
+    .left-bottom {
+      top: 470px;
+      left: 100px;
+    }
+
+    .right-top {
+      top: 110px;
+      right: 100px;
+    }
+
+    .right-bottom {
+      top: 470px;
+      right: 100px;
     }
 
     .form-container {
       position: relative;
       padding: 30px;
       border-radius: 15px;
-      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
       width: 100%;
       max-width: 800px;
       border: 8px solid #600000;
-      text-align: center;
-      overflow: hidden;
       background-color: #900000;
+      text-align: center;
+      z-index: 2;
     }
 
     .form-container::before {
@@ -41,7 +80,7 @@
       z-index: 1;
     }
 
-    .form-container > * {
+    .form-container>* {
       position: relative;
       z-index: 2;
     }
@@ -49,7 +88,6 @@
     h1 {
       color: white;
       margin-bottom: 20px;
-      font-size: 32px;
     }
 
     .form-group-container {
@@ -101,35 +139,6 @@
       background-color: #c9302c;
     }
 
-    @media (max-width: 768px) {
-      .form-group-container {
-        flex-direction: column;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .form-container {
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-
-      .form-group label {
-        font-size: 14px;
-      }
-
-      input, button {
-        font-size: 14px;
-        padding: 10px;
-      }
-
-      button {
-        width: 100%;
-      }
-    }
-
     .checkbox-label-container {
       display: none;
       color: white;
@@ -139,19 +148,63 @@
       gap: 10px;
     }
 
-    .logo {
-      width: 100%;
-      max-width: 700px;
-      height: auto;
-      margin-bottom: 20px;
+    /* ✅ Responsive pentru imagini */
+    @media (max-width: 992px) {
+      .corner-image {
+        width: 150px;
+        height: 150px;
+      }
+
+      .left-top {
+        top: 110px;
+        left: 100px;
+      }
+
+      .left-bottom {
+        top: 470px;
+        left: 100px;
+      }
+
+      .right-top {
+        top: 110px;
+        right: 100px;
+      }
+
+      .right-bottom {
+        top: 470px;
+        right: 100px;
+      }
+    }
+
+    /* ✅ Pe ecrane foarte mici (mobile), ascundem imaginile */
+    @media (max-width: 600px) {
+      .corner-image {
+        display: none;
+      }
+
+      .form-container {
+        padding: 20px;
+      }
+
+      .form-group-container {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Logo deasupra formularului -->
+  <!-- Logo -->
   <img src="logo.png" alt="Logo" class="logo">
 
+  <!-- Imagini decorative -->
+  <img src="img1.jpg" alt="Stânga sus" class="corner-image left-top">
+  <img src="img2.jpg" alt="Stânga jos" class="corner-image left-bottom">
+  <img src="img3.jpg" alt="Dreapta sus" class="corner-image right-top">
+  <img src="img4.jpg" alt="Dreapta jos" class="corner-image right-bottom">
+
+  <!-- Formular -->
   <div class="form-container">
     <h1>Formular de Înscriere</h1>
     <form id="inscriereForm">
@@ -169,7 +222,8 @@
       <div class="form-group-container">
         <div class="form-group">
           <label for="varsta">Vârstă</label>
-          <input type="text" id="varsta" name="varsta" required maxlength="2" pattern="[0-9]{1,2}" title="Introduceți o valoare numerică" oninput="verificaVarsta()">
+          <input type="text" id="varsta" name="varsta" required maxlength="2" pattern="[0-9]{1,2}"
+            title="Introduceți o valoare numerică" oninput="verificaVarsta()">
         </div>
         <div class="form-group">
           <label for="telefon">Telefon</label>
@@ -229,8 +283,8 @@
         method: 'POST',
         body: JSON.stringify(data)
       })
-      .then(response => alert('Formular trimis cu succes!'))
-      .catch(error => alert('Eroare la trimitere!'));
+        .then(response => alert('Formular trimis cu succes!'))
+        .catch(error => alert('Eroare la trimitere!'));
 
       form.reset();
     });
@@ -238,10 +292,9 @@
     function verificaVarsta() {
       let varsta = document.getElementById("varsta").value;
       let textMinori = document.getElementById("text-minori");
-
       textMinori.style.display = (varsta !== "" && parseInt(varsta) < 18) ? "flex" : "none";
     }
   </script>
-
 </body>
+
 </html>
