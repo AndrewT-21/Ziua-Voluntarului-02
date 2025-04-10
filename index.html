@@ -27,6 +27,7 @@
       border: 8px solid #600000;
       text-align: center;
       overflow: hidden;
+      background-color: #900000;
     }
 
     .form-container::before {
@@ -48,6 +49,7 @@
     h1 {
       color: white;
       margin-bottom: 20px;
+      font-size: 32px;
     }
 
     .form-group-container {
@@ -81,7 +83,8 @@
     }
 
     button {
-      width: 50%;
+      width: 100%;
+      max-width: 300px;
       padding: 14px;
       color: white;
       border: none;
@@ -104,6 +107,29 @@
       }
     }
 
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .form-group label {
+        font-size: 14px;
+      }
+
+      input, button {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+
     .checkbox-label-container {
       display: none;
       color: white;
@@ -113,111 +139,109 @@
       gap: 10px;
     }
 
-    /* Stil pentru logo */
     .logo {
-      max-width: 800px;  /* Ajustează lățimea logo-ului */
-      margin-bottom: 20px; /* Distanța între logo și formular */
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Adăugarea logo-ului deasupra formularului -->
+  <!-- Logo deasupra formularului -->
   <img src="logo.png" alt="Logo" class="logo">
 
-<div class="form-container">
-  <h1>Formular de Înscriere</h1>
-  <form id="inscriereForm">
-    <div class="form-group-container">
-      <div class="form-group">
-        <label for="nume">Nume</label>
-        <input type="text" id="nume" name="nume" required maxlength="255">
+  <div class="form-container">
+    <h1>Formular de Înscriere</h1>
+    <form id="inscriereForm">
+      <div class="form-group-container">
+        <div class="form-group">
+          <label for="nume">Nume</label>
+          <input type="text" id="nume" name="nume" required maxlength="255">
+        </div>
+        <div class="form-group">
+          <label for="prenume">Prenume</label>
+          <input type="text" id="prenume" name="prenume" required maxlength="255">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="prenume">Prenume</label>
-        <input type="text" id="prenume" name="prenume" required maxlength="255">
+
+      <div class="form-group-container">
+        <div class="form-group">
+          <label for="varsta">Vârstă</label>
+          <input type="text" id="varsta" name="varsta" required maxlength="2" pattern="[0-9]{1,2}" title="Introduceți o valoare numerică" oninput="verificaVarsta()">
+        </div>
+        <div class="form-group">
+          <label for="telefon">Telefon</label>
+          <input type="tel" id="telefon" name="telefon" required maxlength="15">
+        </div>
       </div>
-    </div>
 
-    <div class="form-group-container">
-      <div class="form-group">
-        <label for="varsta">Vârstă</label>
-        <input type="text" id="varsta" name="varsta" required maxlength="2" pattern="[0-9]{1,2}" title="Introduceți o valoare numerică" oninput="verificaVarsta()">
+      <div class="form-group-container">
+        <div class="form-group">
+          <label for="judet">Județ</label>
+          <input type="text" id="judet" name="judet" required maxlength="255">
+        </div>
+        <div class="form-group">
+          <label for="oras">Oraș</label>
+          <input type="text" id="oras" name="oras" required maxlength="255">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="telefon">Telefon</label>
-        <input type="tel" id="telefon" name="telefon" required maxlength="15">
+
+      <div class="form-group-container">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required maxlength="255">
+        </div>
       </div>
-    </div>
 
-    <div class="form-group-container">
-      <div class="form-group">
-        <label for="judet">Județ</label>
-        <input type="text" id="judet" name="judet" required maxlength="255">
+      <div class="checkbox-label-container" id="text-minori">
+        <input type="checkbox" id="acord-parinti" name="acord-parinti" value="1" style="width: 24px; height: 24px;">
+        <label for="acord-parinti">Părinții tăi sunt de-acord să fii prezent?</label>
       </div>
-      <div class="form-group">
-        <label for="oras">Oraș</label>
-        <input type="text" id="oras" name="oras" required maxlength="255">
-      </div>
-    </div>
 
-    <div class="form-group-container">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required maxlength="255">
-      </div>
-    </div>
+      <button type="submit">Trimite Formular</button>
+    </form>
+  </div>
 
-    <div class="checkbox-label-container" id="text-minori" style="display: none;">
-      <input type="checkbox" id="acord-parinti" name="acord-parinti" value="1" style="width: 24px; height: 24px;">
-      <label for="acord-parinti">Părinții tăi sunt de-acord să fii prezent?</label>
-    </div>
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyXloXS5NX2bjOivVPFhPuftXz3r_7fqb-rbB-6MfFWJ1DY9dkXOYficm0CtaG27qXK_Q/exec';
+    const form = document.getElementById('inscriereForm');
 
-    <button type="submit">Trimite Formular</button>
-  </form>
-</div>
+    form.addEventListener('submit', e => {
+      e.preventDefault();
 
-<script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbyXloXS5NX2bjOivVPFhPuftXz3r_7fqb-rbB-6MfFWJ1DY9dkXOYficm0CtaG27qXK_Q/exec'; // URL script
+      const varsta = form.varsta.value;
+      const acordParinti = (parseInt(varsta) < 18) ? form['acord-parinti'].checked : true;
 
-  const form = document.getElementById('inscriereForm');
-  form.addEventListener('submit', e => {
-    e.preventDefault();
+      const data = {
+        nume: form.nume.value,
+        prenume: form.prenume.value,
+        varsta: form.varsta.value,
+        telefon: form.telefon.value,
+        judet: form.judet.value,
+        oras: form.oras.value,
+        email: form.email.value,
+        acord_parinti: acordParinti ? 'Da' : 'Nu'
+      };
 
-    // Preluăm datele din formular
-    const varsta = form.varsta.value;
-    const acordParinti = (parseInt(varsta) < 18) ? form['acord-parinti'].checked : true; // dacă este minor, verificăm acordul, altfel îl setăm pe DA
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(data)
+      })
+      .then(response => alert('Formular trimis cu succes!'))
+      .catch(error => alert('Eroare la trimitere!'));
 
-    const data = {
-      nume: form.nume.value,
-      prenume: form.prenume.value,
-      varsta: form.varsta.value,
-      telefon: form.telefon.value,
-      judet: form.judet.value,
-      oras: form.oras.value,
-      email: form.email.value,
-      acord_parinti: acordParinti ? 'Da' : 'Nu' // Salvăm DA sau NU în funcție de valoarea acordului
-    };
+      form.reset();
+    });
 
-    fetch(scriptURL, {
-      method: 'POST',
-      body: JSON.stringify(data)
-    })
-    .then(response => alert('Formular trimis cu succes!'))
-    .catch(error => alert('Eroare la trimitere!'));
+    function verificaVarsta() {
+      let varsta = document.getElementById("varsta").value;
+      let textMinori = document.getElementById("text-minori");
 
-    form.reset();
-  });
-
-  // Functia care verifică vârsta și actualizează vizibilitatea casetei de acord
-  function verificaVarsta() {
-    let varsta = document.getElementById("varsta").value;
-    let textMinori = document.getElementById("text-minori");
-
-    // Dacă utilizatorul este minor, arătăm căsuța de acord
-    textMinori.style.display = (varsta !== "" && parseInt(varsta) < 18) ? "flex" : "none";
-  }
-</script>
+      textMinori.style.display = (varsta !== "" && parseInt(varsta) < 18) ? "flex" : "none";
+    }
+  </script>
 
 </body>
 </html>
