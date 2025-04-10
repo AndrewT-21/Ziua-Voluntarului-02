@@ -176,18 +176,56 @@
       }
     }
 
-    /* ✅ Pe ecrane foarte mici (mobile), ascundem imaginile */
+    /* ✅ Pe ecrane foarte mici (mobile), imaginile se redimensionează și formularul devine mai compact */
     @media (max-width: 600px) {
       .corner-image {
-        display: none;
+        width: 100px;
+        height: 100px;
+        opacity: 0.8;
+      }
+
+      .left-top {
+        top: 40px;
+        left: 10px;
+      }
+
+      .left-bottom {
+        top: 400px;
+        left: 10px;
+      }
+
+      .right-top {
+        top: 40px;
+        right: 10px;
+      }
+
+      .right-bottom {
+        top: 400px;
+        right: 10px;
       }
 
       .form-container {
-        padding: 20px;
+        padding: 15px;
+        margin-top: 20px;
       }
 
       .form-group-container {
         flex-direction: column;
+      }
+
+      input {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      .logo {
+        max-width: 200px;
+        margin-bottom: 20px;
       }
     }
   </style>
